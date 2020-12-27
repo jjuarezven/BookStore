@@ -31,7 +31,15 @@ namespace BookStore.API
             services.AddAutoMapper(typeof(Startup));
 
             services.AddControllers();
-
+            services.AddCors();
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("CorsPolicy", builder => builder.WithOrigins("http://localhost:4200")
+            //        .AllowAnyHeader()
+            //        .AllowAnyMethod()
+            //        .AllowCredentials()
+            //        .SetIsOriginAllowed((host) => true));
+            //});
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
@@ -61,6 +69,8 @@ namespace BookStore.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseEndpoints(endpoints =>
             {
